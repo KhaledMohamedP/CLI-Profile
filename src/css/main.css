@@ -1,0 +1,23 @@
+*{
+	background: black; 
+	color: white; 
+	font-size: 16px;
+	margin: 0; 
+	padding: 1px;
+	font-family: monospace; 
+}
+body{
+	border-top: 20px black; 
+}
+
+input{
+	color: red; 
+	border: 2px red; 
+	outline: none; 
+	cursor: default; 	
+}
+
+em{
+	color: red; 
+	margin: 0; 
+}

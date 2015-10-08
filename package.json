@@ -1,0 +1,34 @@
+{
+  "name": "cli-profile",
+  "version": "1.0.0",
+  "description": "Introducing oneself the old fasion way",
+  "main": "index.js",
+  "scripts": {
+    "build": "jasmine && npm run cover && npm run browserify ",
+    "cover": "istanbul cover jasmine",
+    "watchify": "watchify ./src/js/Display.js  -o ./src/js/main.js -d",
+    "browserify": "browserify ./src/js/Display.js  -o ./src/js/main.js -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KhaledMohamedP/CLI-Profile.git"
+  },
+  "keywords": [
+    "cli",
+    "profile"
+  ],
+  "author": "Khaled Mohamed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KhaledMohamedP/CLI-Profile/issues"
+  },
+  "homepage": "https://github.com/KhaledMohamedP/CLI-Profile#readme",
+  "devDependencies": {
+    "browserify": "^11.2.0",
+    "eslint": "^1.6.0",
+    "istanbul": "^0.3.22",
+    "jasmine": "^2.3.2",
+    "mustache": "^2.1.3",
+    "watchify": "^3.4.0"
+  }
+}
