@@ -1,4 +1,4 @@
-// CLI - The screen 
+// CLI - Controller
 var Storage = require("./Storage.js");
 
 // CLI - Simple the runner Controller 
@@ -23,8 +23,8 @@ CLI.prototype.cleanPwd = function(pwd) {
     };
     //clean pwd from spaces/slashes at the end of the link(pwd)
     return listDirectory.join('/');
-}
-CLI.prototype.option = function(input) {
+},
+CLI.prototype.run = function (input) {
     var arg = input.split(/\s+/); //removing unnecessary spaces 
     var command = arg[0].toLowerCase(); //
     var pwd = arg[1] ? this.cleanPwd(arg[1]) : this.workingDirectory;
@@ -34,6 +34,9 @@ CLI.prototype.option = function(input) {
     if (this.commands.indexOf(command) == -1) {
         throw Error("Unknown command '" + command + "'");
     }
+    return this.option(command, pwd)
+},
+CLI.prototype.option = function(command, pwd) {
     switch (command) {
         case 'ls':
             return this.ls(pwd);
@@ -57,7 +60,7 @@ CLI.prototype.help = function(pwd) {
 
 CLI.prototype.cat = function(pwd) {
 	var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
-    return JSON.stringify(this.data.dir(pwd));
+    return JSON.stringify(this.data.dir(pwd, false));
 }
 
 CLI.prototype.pwd = function() {
@@ -72,12 +75,10 @@ CLI.prototype.cd = function(pwd) {
         arrayDirectory.pop();
         pwd = arrayDirectory.join('/')
         this.workingDirectory = pwd;
-    } else if (pwd === "//") {
-        this.workingDirectory = '/';
     } else {
 	    var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
 	    try{
-	        this.data.dir(pwd);
+	        this.data.dir(pwd, true);
 	        this.workingDirectory = pwd; 
 	    }catch(e){
 	    	return e;

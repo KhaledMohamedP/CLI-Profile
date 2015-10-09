@@ -1,5 +1,7 @@
+// CLI - View
 var CLI = require("./cli.js");
 var data = require("./data.js");
+// var template = require("./template.js");
 
 var mu = require("mustache");
 
@@ -11,8 +13,6 @@ var display, inputDi, input, UP_KEY = 38,
     ENTER_KEY = 13,
     CTR_KEY = 91,
     K_KEY = 75,
-    CTRL_KEY = 17,
-    MAC_KEY = 91,
     where = cli.lastCommand.length;
 
 function Display(screen) {
@@ -23,24 +23,25 @@ function Display(screen) {
     //js setting 
     input.autofocus = true;
     //When user enter something 
-    inputDiv.innerHTML = "/> "
+    inputDiv.innerHTML = "$ "
     inputDiv.style.color = "red"
     input.onkeyup = function(e) {
-
         switch (e.which) {
             case ENTER_KEY:
                 enter(e)
                 break;
             case UP_KEY:
-                upkey(e); 
+                upkey(e);
                 break;
             case DOWN_KEY:
-                downkey(e); 
+                downkey(e);
                 break;
-            case MAC_KEY && K_KEY: 
-            case CTRL_KEY && K_KEY: 
-                console.log('the k key')
+            // case MAC_KEY && K_KEY:
+            case e.ctrlKey && K_KEY:
+                clear();
+                break;
             default:
+                console.log('the k key')
                 break;
         }
     }
@@ -53,15 +54,19 @@ function Display(screen) {
 
 }
 
-function enter(e) {
-    var commandLength = cli.lastCommand.length;
+function clear() {
+    display.innerHTML = "";
+    input.value = "";
+    return; 
+}
 
+function enter(e) {
+    //GUI Affect Commands 
     if (input.value == "clear") {
-        display.innerHTML = "";
-        input.value = "";
-        return;
+        return clear();
     }
 
+    var commandLength = cli.lastCommand.length;
 
     var result = callCli(input.value);
     var obj = {
@@ -69,47 +74,48 @@ function enter(e) {
         command: cli.lastCommand[commandLength],
     }
 
-    var view = mu.to_html("<div> <em> /> {{command}}</em> <p>{{result}}</p> </div>", obj);
+    var view = mu.to_html("<div> <em>$ {{command}}</em> <p>{{result}}</p> </div>", obj);
     display.insertAdjacentHTML("beforeend", view)
 
     //reset
     input.value = '';
-
     where = cli.lastCommand.length;
-    console.log('enter', where)
-    console.log('enter', cli.lastCommand)
-
 }
 
-function upkey (e) {
+function upkey(e) {
     var letWhere = where - 1;
-    if(letWhere > -1 && letWhere < cli.lastCommand.length){
+    if (letWhere > -1 && letWhere < cli.lastCommand.length) {
         input.value = cli.lastCommand[--where];
-        return; 
+        return;
     }
 }
-function downkey (e) {
+
+function downkey(e) {
     var letWhere = where + 1;
-    if(letWhere > -1 && letWhere < cli.lastCommand.length){
+    if (letWhere > -1 && letWhere < cli.lastCommand.length) {
         input.value = cli.lastCommand[++where];
-        return; 
+        return;
     }
 
     // reached the limit reset 
-    where = cli.lastCommand.length; 
+    where = cli.lastCommand.length;
     input.value = '';
 }
+
 function callCli(command) {
     try {
-        var result = cli.option(command);
-        if (result instanceof Array) {
-            // console.log(result.join('<br>'))
-            return result.join('\n');
-        }
-        return result;
+        return run(command)
     } catch (e) {
         return e.message;
     }
 }
 
-Display(document.body);
+function run(command) {
+    var result = cli.run(command);
+    if (result instanceof Array) {
+        return result.join('\n');
+    }
+    return result;
+}
+
+window.onload = Display(document.body);

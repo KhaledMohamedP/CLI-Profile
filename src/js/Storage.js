@@ -1,30 +1,35 @@
-//CLI - Our stupid database 
+//CLI - Model 
 
 function Storage(data) {
     this.directory = data || {};
 }
 
 
-Storage.prototype.dir = function(pwd) {
+Storage.prototype.dir = function(pwd, directory) {
     var currDir = this.directory;
 
-   	//if directory is not given 
+    //if directory is not given 
     if (pwd == '' || pwd == undefined || pwd == null) {
         return currDir;
     }
 
     var subDir = pwd.split('/');
-  
+
     for (var i = 0; i < subDir.length; i++) {
         if (!this.has(currDir, subDir[i])) {
-            throw Error("cd: The directory '" + subDir[i] + "' does not exist");
-        } else {
-            currDir = currDir[subDir[i]]
+            throw new Error("cd: The directory '" + subDir[i] + "' does not exist");
         }
-    }
+        if (directory) {
+            if (!this.isDirectory(currDir[subDir[i]])) {
+                throw new Error("cd: '" + subDir[i]  +"' is not a directory")
+            }
+        }
 
+        currDir = currDir[subDir[i]]
+    }
     return currDir;
 }
+
 
 Storage.prototype.list = function(pwd) {
     var list = [];
@@ -32,12 +37,20 @@ Storage.prototype.list = function(pwd) {
 
     for (var i in dir) {
         if (dir.hasOwnProperty(i)) {
-            list.push(i)
+            if (i != "directory")
+                list.push(i)
         }
     }
     return list;
 }
+Storage.prototype.isDirectory = function(obj) {
+    if (obj.hasOwnProperty("directory")) {
+        if (obj["directory"] == false)
+            return false;
+    }
 
+    return true;
+}
 Storage.prototype.has = function(dir, subDir) {
     if (dir.hasOwnProperty(subDir)) {
         return true

@@ -4,30 +4,34 @@ var CLI = require("../src/js/cli.js");
 
 describe("testing", function() {
     var cli = new CLI(data);
+    beforeEach(function(){
+        
+    });
     it('should return the correct directory ls', function() {
-        var result = cli.option("ls")
+        var result = cli.run("ls")
         expect(result[0]).toEqual("Experience");
-        cli.option("cd Experience");
-        result = cli.option("ls");
+        cli.run("cd Experience");
+        result = cli.run("ls");
         expect(result[0]).toEqual("TFA");
 
     });
 
     it("should have the correct working directory", function  () {
-    	cli.option("cd TFA");
-    	var pwd = cli.option("pwd");
-    	expect(pwd).toEqual("Experience/TFA");
+    	expect(function(){
+            throw cli.run("cd Experience/TFA")
+        }).toThrow()
     })
 
     it("should not change working directory if given wrong pwd", function () {
-    	cli.option("cd llksfk");
-		pwd = cli.option("pwd");
-    	expect(pwd).toEqual("Experience/TFA");
+        cli.run("cd Experience");
+    	cli.run("cd llksfk");
+		pwd = cli.run("pwd");
+    	expect(pwd).toEqual("Experience");
     })
 
     it("should be able to go back .. and carries the correct pwd", function  () {
-    	cli.option("cd ..")
-		pwd = cli.option("pwd");
-    	expect(pwd).toEqual("Experience");
+    	cli.run("cd ..")
+		pwd = cli.run("pwd");
+    	expect(pwd).toEqual("/");
     })
 });
