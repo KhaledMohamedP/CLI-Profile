@@ -1,23 +1,62 @@
 *{
-	background: black; 
+	/*background: black; */
 	color: white; 
 	font-size: 16px;
-	margin: 0; 
 	padding: 1px;
 	font-family: monospace; 
 }
 body{
+	margin: 0; 
 	border-top: 20px black; 
 }
 
-input{
-	color: red; 
+
+.terminal{
+	background: black;
+	width: auto; 
+	height: 500px;  
+	margin: 0 auto; 
+	border-radius: 5px; 
+	border-top: 30px solid #dfdfdf;
+	border-right: 2px solid #dfdfdf;
+	border-left: 2px solid #dfdfdf;
+	padding-bottom:5px; 
+	overflow: scroll; 
+}
+.terminal input{
+	color: #f36; 
 	border: 2px red; 
 	outline: none; 
-	cursor: default; 	
+	cursor: default; 
+	background: black; 
+	padding-left: 10px; 
 }
 
-em{
-	color: red; 
-	margin: 0; 
+.terminal em, .terminal p{
+	color: #f36; 
+	margin:1px; 
+}
+/* Experiment*/
+.terminal::before{
+	position: absolute;  
+	top: 12px;
+	background-color: #FC625C;  
+	width: 10px; 
+	height: 10px; 
+	border-radius: 5px; 
+	display: block; 
+	content: "";
+	box-shadow: 0 0 0 0 #FC625C,15px 0 0 0 #FDBC40,30px 0 0 0 #33C748;
+}
+
+.terminal .experience{
+	position: relative; 
+	padding: 5px; 
+}
+.terminal .experience .period{
+	float: right; 
+	font-size: 12px; 
+}
+.terminal .experience em{
+	font-size: 12px; 
 }

@@ -7,7 +7,7 @@ function Storage(data) {
 
 Storage.prototype.dir = function(pwd, directory) {
     var currDir = this.directory;
-
+    var directory = directory || false; 
     //if directory is not given 
     if (pwd == '' || pwd == undefined || pwd == null) {
         return currDir;

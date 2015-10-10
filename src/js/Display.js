@@ -1,7 +1,7 @@
 // CLI - View
 var CLI = require("./cli.js");
 var data = require("./data.js");
-// var template = require("./template.js");
+var template = require("../template/ls.js");
 
 var mu = require("mustache");
 
@@ -11,7 +11,6 @@ var cli = new CLI(data);
 var display, inputDi, input, UP_KEY = 38,
     DOWN_KEY = 40,
     ENTER_KEY = 13,
-    CTR_KEY = 91,
     K_KEY = 75,
     where = cli.lastCommand.length;
 
@@ -23,7 +22,7 @@ function Display(screen) {
     //js setting 
     input.autofocus = true;
     //When user enter something 
-    inputDiv.innerHTML = "$ "
+    inputDiv.innerHTML = "$"
     inputDiv.style.color = "red"
     input.onkeyup = function(e) {
         switch (e.which) {
@@ -36,16 +35,16 @@ function Display(screen) {
             case DOWN_KEY:
                 downkey(e);
                 break;
-            // case MAC_KEY && K_KEY:
+                // case MAC_KEY && K_KEY:
             case e.ctrlKey && K_KEY:
                 clear();
                 break;
             default:
-                console.log('the k key')
                 break;
         }
+        // Automatically scroll to the bottom 
+        screen.scrollTop = screen.scrollHeight;
     }
-
 
     //
     screen.appendChild(display);
@@ -57,7 +56,7 @@ function Display(screen) {
 function clear() {
     display.innerHTML = "";
     input.value = "";
-    return; 
+    return;
 }
 
 function enter(e) {
@@ -66,15 +65,8 @@ function enter(e) {
         return clear();
     }
 
-    var commandLength = cli.lastCommand.length;
+    var view = getView(input.value);
 
-    var result = callCli(input.value);
-    var obj = {
-        result: result,
-        command: cli.lastCommand[commandLength],
-    }
-
-    var view = mu.to_html("<div> <em>$ {{command}}</em> <p>{{result}}</p> </div>", obj);
     display.insertAdjacentHTML("beforeend", view)
 
     //reset
@@ -82,7 +74,7 @@ function enter(e) {
     where = cli.lastCommand.length;
 }
 
-function upkey(e) {
+function upkey() {
     var letWhere = where - 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
         input.value = cli.lastCommand[--where];
@@ -90,7 +82,7 @@ function upkey(e) {
     }
 }
 
-function downkey(e) {
+function downkey() {
     var letWhere = where + 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
         input.value = cli.lastCommand[++where];
@@ -102,20 +94,30 @@ function downkey(e) {
     input.value = '';
 }
 
-function callCli(command) {
+function getView(command) {
     try {
-        return run(command)
+        return getViewHelper(cli.run(command))
     } catch (e) {
-        return e.message;
+        return getViewHelper(e.message);
     }
 }
 
-function run(command) {
-    var result = cli.run(command);
-    if (result instanceof Array) {
-        return result.join('\n');
+function getViewHelper(result) {
+    var obj = {
+        command: cli.lastCommand[cli.lastCommand.length - 1],
+        result: result
     }
-    return result;
+    if(isObject(result)){
+        obj.isCompany = obj.result.company? true:false; 
+        return mu.to_html(template.experience, obj);
+    }
+    return mu.to_html(template.list, obj);
 }
 
-window.onload = Display(document.body);
+function isObject (obj) {
+    return typeof obj === "object" && !Array.isArray(obj) && obj !== null;
+}
+window.onload = function() {
+    var terminal = document.querySelector(".terminal");
+    Display(terminal);
+}

@@ -1,32 +1,32 @@
 //Experience 
 var TFA = {
-    "Company": "Teach For America",
-    "Title": "Front-End Junior Developer",
-    "Detail": "A lot of JavaSript work",
-    "Time": "August-December",
+    "company": "Teach For America",
+    "title": "Front-End Junior Developer",
+    "detail": "A lot of JavaSript work",
+    "time": "August-December",
     "directory": false
 }
 
 var ABC = {
-    "Company": "ABC Global System",
-    "Title": "Software Developer",
-    "Detail": "A lot of Java work",
-    "Time": "August-December",
+    "company": "ABC Global System",
+    "title": "Software Developer",
+    "detail": "A lot of Java work",
+    "time": "August-December",
     "directory": false
 }
 
 //BinaryHeap
 var BinaryHeap = {
-    "Title": "BinaryHeap",
-    "Detail": "BinaryHeap Implementation as BinaryTree-like structure",
-    "Time": "September",
+    "title": "BinaryHeap",
+    "detail": "BinaryHeap Implementation as BinaryTree-like structure",
+    "time": "September",
     "directory": false
 }
 
 var HuffmandCoding = {
-    "Title": "HuffmandCoding",
-    "Detail": "HuffmandCoding using JS, HTML, CSS COOL huh",
-    "Time": "June",
+    "title": "HuffmandCoding",
+    "detail": "HuffmandCoding using JS, HTML, CSS COOL huh",
+    "time": "June",
     "directory": false
 }
 

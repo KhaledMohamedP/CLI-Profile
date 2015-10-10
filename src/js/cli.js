@@ -60,7 +60,12 @@ CLI.prototype.help = function(pwd) {
 
 CLI.prototype.cat = function(pwd) {
 	var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
-    return JSON.stringify(this.data.dir(pwd, false));
+
+    var file = this.data.dir(pwd); 
+    if (this.data.isDirectory(file)) {
+        throw new Error("cat: '" + file  +"' is a directory")
+    }
+    return file;
 }
 
 CLI.prototype.pwd = function() {
@@ -81,7 +86,7 @@ CLI.prototype.cd = function(pwd) {
 	        this.data.dir(pwd, true);
 	        this.workingDirectory = pwd; 
 	    }catch(e){
-	    	return e;
+	    	return e.message;
 	    }
     }
 
