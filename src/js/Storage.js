@@ -9,11 +9,12 @@ Storage.prototype.dir = function(pwd, directory) {
     var currDir = this.directory;
     var directory = directory || false; 
     //if directory is not given 
+    var subDir = pwd.split('/');
+    subDir.shift(); //removes this.root 
     if (pwd == '' || pwd == undefined || pwd == null) {
         return currDir;
     }
 
-    var subDir = pwd.split('/');
 
     for (var i = 0; i < subDir.length; i++) {
         if (!this.has(currDir, subDir[i])) {

@@ -1,52 +1,66 @@
 //Experience 
 var TFA = {
-    "company": "Teach For America",
-    "title": "Front-End Junior Developer",
-    "detail": "A lot of JavaSript work",
-    "time": "August-December",
+    "header": "Teach For America",
+    "subHeader": "Front-End Developer",
+    "detail": ["JavaSript, HTML, & CSS"],
+    "location": "NYC, New York",
+    "period": "August-December `14",
     "directory": false
 }
 
 var ABC = {
-    "company": "ABC Global System",
-    "title": "Software Developer",
+    "header": "ABC Global System",
+    "subHeader": "Software Developer",
     "detail": "A lot of Java work",
-    "time": "August-December",
+    "period": "August-December",
+    "location": "NYC, New York",
     "directory": false
 }
 
 //BinaryHeap
 var BinaryHeap = {
-    "title": "BinaryHeap",
+    "header": "BinaryHeap",
+    "subHeader": "Open-Source",
     "detail": "BinaryHeap Implementation as BinaryTree-like structure",
-    "time": "September",
+    "location": "Aden, Yemen",
+    "period": "September",
     "directory": false
 }
 
 var HuffmandCoding = {
-    "title": "HuffmandCoding",
+    "header": "HuffmandCoding",
+    "subHeader": "Open-Source",
     "detail": "HuffmandCoding using JS, HTML, CSS COOL huh",
-    "time": "June",
+    "location": "Aden, Yemen",
+    "period": "June",
     "directory": false
 }
 
+//skills
+var skills = {
+    "header": "Skills",
+    "subHeader": "Tools I used over the years",
+    "period": "2006-" + new Date().getFullYear().toString(),
+    "detail": [
+        "🙈Love JavaScript",
+        "🏫Done college work in C++",
+        "💥Java helped me become a developer",
+        "✅Enjoy learning new tools everyday"
+    ],
+    "directory": false
+};
+
 //File structure
 var directory = {
-    "Experience": {
+    "experience": {
         "TFA": TFA,
         "ABC": ABC,
     },
-    "Project": {
+    "project": {
         "BinaryHeap": BinaryHeap,
         "HuffmandCoding": HuffmandCoding,
     },
-    "Skills": {
-        "JavaScript": "Love JS",
-        "C++": "Love C++",
-        "Java": "love java",
-        "others": "learn any tool within 7 days but to built a scalable software in that tool it will take me 20 years",
-    }
+    "skills": skills
+
 }
-
-
 module.exports = directory;

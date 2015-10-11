@@ -7,8 +7,8 @@ var mu = require("mustache");
 
 // mu.root = "../template"
 
-var cli = new CLI(data);
-var display, inputDi, input, UP_KEY = 38,
+var cli = new CLI(data, "root", "khaled");
+var  input, UP_KEY = 38,
     DOWN_KEY = 40,
     ENTER_KEY = 13,
     K_KEY = 75,
@@ -16,28 +16,29 @@ var display, inputDi, input, UP_KEY = 38,
 
 function Display(screen) {
     //Main Element  
-    display = document.createElement("div");
-    inputDiv = document.createElement("div");
-    input = document.createElement("input");
-    //js setting 
-    input.autofocus = true;
+    this.terminal = document.createElement("div");
+    this.inputDiv = document.createElement("div");
+    this.inputEm = document.createElement("em");
+    this.input = document.createElement("input");
     //When user enter something 
-    inputDiv.innerHTML = "$"
-    inputDiv.style.color = "red"
-    input.onkeyup = function(e) {
+    this.inputEm.innerHTML = cli.workingDirectory + " >$";
+    this.inputDiv.style.color = "red"
+    
+    //listen to key strokes 
+    var self = this; 
+    this.input.onkeyup = function(e) {
         switch (e.which) {
             case ENTER_KEY:
-                enter(e)
+                self.enter(e)
                 break;
             case UP_KEY:
-                upkey(e);
+                self.upkey(e);
                 break;
             case DOWN_KEY:
-                downkey(e);
+                self.downkey(e);
                 break;
-                // case MAC_KEY && K_KEY:
             case e.ctrlKey && K_KEY:
-                clear();
+                self.clear();
                 break;
             default:
                 break;
@@ -46,78 +47,101 @@ function Display(screen) {
         screen.scrollTop = screen.scrollHeight;
     }
 
-    //
-    screen.appendChild(display);
-    inputDiv.appendChild(input);
-    screen.appendChild(inputDiv)
+    //Append to the give div
+    screen.appendChild(this.terminal);
+    this.inputDiv.appendChild(this.inputEm);
+    this.inputDiv.appendChild(this.input);
+    screen.appendChild(this.inputDiv)
 
 }
 
-function clear() {
-    display.innerHTML = "";
-    input.value = "";
+Display.prototype.clear = function() {
+    this.terminal.innerHTML = "";
+    this.input.value = "";
     return;
 }
 
-function enter(e) {
+Display.prototype.enter = function(e) {
     //GUI Affect Commands 
-    if (input.value == "clear") {
-        return clear();
+    if (this.input.value == "clear") {
+        return this.clear();
     }
 
-    var view = getView(input.value);
+    var view = this.getView(this.input.value);
 
-    display.insertAdjacentHTML("beforeend", view)
+    this.terminal.insertAdjacentHTML("beforeend", view)
 
     //reset
-    input.value = '';
+    this.inputEm.innerHTML = cli.workingDirectory + " >$";
+    this.input.value = '';
     where = cli.lastCommand.length;
 }
 
-function upkey() {
+Display.prototype.upkey = function() {
     var letWhere = where - 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        input.value = cli.lastCommand[--where];
+        this.input.value = cli.lastCommand[--where];
         return;
     }
 }
 
-function downkey() {
+Display.prototype.downkey = function() {
     var letWhere = where + 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        input.value = cli.lastCommand[++where];
+        this.input.value = cli.lastCommand[++where];
         return;
     }
 
     // reached the limit reset 
     where = cli.lastCommand.length;
-    input.value = '';
+    this.input.value = '';
 }
 
-function getView(command) {
+Display.prototype.getView = function(command) {
     try {
-        return getViewHelper(cli.run(command))
+        return this.getViewHelper(cli.run(command))
     } catch (e) {
-        return getViewHelper(e.message);
+        return this.getViewHelper(e.message);
     }
 }
 
-function getViewHelper(result) {
+Display.prototype.getViewHelper = function(result) {
     var obj = {
+        workingDirectory: cli.workingDirectory,
         command: cli.lastCommand[cli.lastCommand.length - 1],
         result: result
     }
-    if(isObject(result)){
+
+    if(this.isObject(result)){
         obj.isCompany = obj.result.company? true:false; 
-        return mu.to_html(template.experience, obj);
+        return mu.to_html(template.section, obj);
     }
+
+    if(Array.isArray(result)){
+        obj.result = obj.result.join("&nbsp;&nbsp;");
+        return mu.to_html(template.list, obj);
+    }
+
     return mu.to_html(template.list, obj);
 }
 
-function isObject (obj) {
+Display.prototype.isObject = function(obj) {
     return typeof obj === "object" && !Array.isArray(obj) && obj !== null;
 }
+
+
+
+
 window.onload = function() {
-    var terminal = document.querySelector(".terminal");
-    Display(terminal);
+    var elm = document.querySelector(".terminal");
+    elm.setAttribute("tabindex", 1)
+    
+    var some = new Display(elm);
+
+    elm.onkeypress = function(e){
+        some.input.focus();
+    }
+
+    //when first loaded 
+    some.input.focus();
 }

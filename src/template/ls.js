@@ -1,23 +1,28 @@
-var experience = ["<div>",
-					"<em>$ {{command}}</em>",
+var section = ["<div>",
+					"<em>{{workingDirectory}} >$ {{command}}</em>",
 				"</div>",
-				"<div class=\"experience\">",
-					"<b>{{result.company}}</b>",
-					"</br>",
-					"<em>{{result.title}}</em>", 
-					"<b class=\"period\"> {{result.period}} | {{result.location}}</b>",
+				"<div class=\"section\">",
+					"<div class=\"header\">",
+						"<div class=\"title\">",
+							"<b>{{result.header}}</b>",
+							"</br>",
+							"<em>~ {{result.subHeader}}</em>", 
+						"</div>",
+						"<b class=\"period\">  {{result.location}}  </br> {{result.period}}</b>",
+					"</div>",
+					"<div class=\"clearfix\"></div> ",
 					"<hr> ",
 					"<div class=\"details\"> ",
-						"{{result.detail}}",
+						"<ul>{{#result.detail}} <li>{{.}}</li>{{/result.detail}}</ul>",
 					"</div>",
 				"</div>"].join("\n");
 
-var list = ["<div> ",
-	    		"<em>$ {{command}}</em>", 
-	    		"<p>{{result}}</p>",
+var list = ["<div class=\"list\"> ",
+	    		"<em>{{workingDirectory}} >$ {{command}}</em>", 
+	    		"<p>{{&result}}</p>",
     		"</div>"].join("\n");
 
 module.exports = {
-    experience: experience,
+    section: section,
     list: list
 }

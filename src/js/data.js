@@ -1,56 +1,87 @@
 //Experience 
 var TFA = {
-    "company": "Teach For America",
-    "title": "Front-End Junior Developer",
-    "detail": "A lot of JavaSript work",
-    "location": "New York",
-    "period": "August-December",
+    "header": "Teach For America",
+    "subHeader": "Front-End Developer",
+    "detail": ["Lot of JavaSript, HTML, & CSS"],
+    "location": "NYC, New York",
+    "period": "August-December `14",
+    "url": "https://www.teachforamerica.org/",
     "directory": false
 }
 
 var ABC = {
-    "company": "ABC Global System",
-    "title": "Software Developer",
-    "detail": "A lot of Java work",
-    "period": "August-December",
-    "location": "New York",
+    "header": "ABC Global System",
+    "subHeader": "Software Developer",
+    "detail": [ "📉 Create software to manipulate and extract data using Regex Expression with Java on UNIX system ",
+                "💻 Developed web applications using HTML/XHTML, CSS and JavaScript with PHP &amp; MySQL ",
+                "📰 Create and manage CMS using WordPress to ensure security and efficiency for the End-Users"
+               ],
+    "period": "January-August '14",
+    "location": "NYC, New York",
+    "url": "www.abcglobalsystems.com/",
     "directory": false
 }
 
 //BinaryHeap
 var BinaryHeap = {
-    "title": "BinaryHeap",
+    "header": "BinaryHeap",
+    "subHeader": "Open-Source",
     "detail": "BinaryHeap Implementation as BinaryTree-like structure",
-    "location": "Aden",
+    "location": "Aden, Yemen",
     "period": "September",
-    "directory": false
+    "url": "https://github.com/KhaledMohamedP/BinaryHeap",
+    "directory": false,
 }
 
 var HuffmandCoding = {
-    "title": "HuffmandCoding",
+    "header": "HuffmanCoding",
+    "subHeader": "Open-Source",
     "detail": "HuffmandCoding using JS, HTML, CSS COOL huh",
-    "location": "Aden",
+    "location": "Aden, Yemen",
     "period": "June",
+    "url": "https://khaledm.com/huffman",
     "directory": false
 }
 
+//skills
+var skills = {
+    "header": "Skills",
+    "subHeader": "🔧 Tools I've used",
+    "period": "2006-" + new Date().getFullYear().toString(),
+    "detail": [
+        "🙈 JavaScript",
+        "🔥 C++",
+        "🔨 Java",
+        "✅ Others"
+    ],
+    "url": "https://github.com/KhaledMohamedP",
+    "directory": false
+};
+
+
+//education 
+var education = {
+    "header": "Brooklyn College",
+    "subHeader": "🎓 Computer Science",
+    "period": "2010-2014",
+    "detail": [
+        "Dean list '13 '14",
+        "CS Mentor with the Department of Computer Science",
+    ],
+    "directory": false
+}
 //File structure
 var directory = {
-    "Experience": {
+    "experience": {
         "TFA": TFA,
         "ABC": ABC,
     },
-    "Project": {
+    "project": {
         "BinaryHeap": BinaryHeap,
         "HuffmandCoding": HuffmandCoding,
     },
-    "Skills": {
-        "JavaScript": "Love JS",
-        "C++": "Love C++",
-        "Java": "love java",
-        "others": "learn any tool within 7 days but to built a scalable software in that tool it will take me 20 years",
-    }
+    "education": education,
+    "skills": skills
+
 }
-
-
 module.exports = directory;

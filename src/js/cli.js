@@ -2,11 +2,13 @@
 var Storage = require("./Storage.js");
 
 // CLI - Simple the runner Controller 
-function CLI(data) {
-    this.workingDirectory = ""
+function CLI(data, root, owner) {
+    this.owner = owner || "Obama";
+    this.root = root || "root";
+    this.workingDirectory = this.root;
     this.lastCommand = [];
     this.data = new Storage(data);
-    this.commands = ["ls", "help", "cd", "cat", "pwd"]
+    this.commands = ["ls", "help", "?", "cd", "cat", "pwd", "open"]
 }
 
 //CLI - Begin Prototype 
@@ -40,22 +42,55 @@ CLI.prototype.option = function(command, pwd) {
     switch (command) {
         case 'ls':
             return this.ls(pwd);
+        case '?':
         case 'help':
             return this.help(pwd);
         case 'cd':
             return this.cd(pwd);
         case 'cat':
             return this.cat(pwd);
+        case 'open':
+            return this.open(pwd);
         case 'pwd':
             return this.pwd(pwd)
     }
 
 }
 CLI.prototype.ls = function(pwd) {
+    if(pwd !== this.workingDirectory)
+        pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
+
+    file = this.data.dir(pwd);
+
+    if (!this.data.isDirectory(file)) {
+        return pwd.split('/')[1];
+    }
+
     return this.data.list(pwd);
 }
 CLI.prototype.help = function(pwd) {
-    return "I will help you soon";
+    return ("   <pre> Welcome to "+this.owner+"'s server via the terminal\n"+
+            "   ?, help : shows some helpful commands.\n" +
+            "        cd : change directory.\n" +
+            "        ls : list directory contents \n" +
+            "       pwd : output the current working directory\n" +
+            "       cat : print the file 😉.\n" +
+            "        vi : coming out soon\n" +
+            "     clear : clears the console. try \'ctrl+k\'"+
+            "   </pre>")
+    // return "&nbsp;&nbsp;cd:  </br> &nbsp;&nbsp;ls:  <br> &nbsp;&nbsp; </br> &nbsp;&nbsp;cat: read a file </br> &nbsp;&nbsp;";
+}
+CLI.prototype.open = function(pwd) {
+    var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
+    var dir = this.data.dir(pwd);
+    if(this.data.isDirectory(dir)){
+        throw Error("sorry there is no support to 'open' directories yet :(")
+    }
+    if(dir.url == undefined || dir.url == null){
+        throw Error("no URL is specify to be open!")
+    }
+    window.open(dir.url)
+    return dir.url;
 }
 
 CLI.prototype.cat = function(pwd) {
@@ -63,52 +98,33 @@ CLI.prototype.cat = function(pwd) {
 
     var file = this.data.dir(pwd); 
     if (this.data.isDirectory(file)) {
-        throw new Error("cat: '" + file  +"' is a directory")
+        throw new Error("cat: '" + pwd  +"' is a directory")
     }
     return file;
 }
 
 CLI.prototype.pwd = function() {
-    if (this.workingDirectory == '') {
-        return '/';
-    }
     return this.workingDirectory;
 }
 CLI.prototype.cd = function(pwd) {
     if (pwd == "..") {
         var arrayDirectory = this.workingDirectory.split('/');
-        arrayDirectory.pop();
+        if(arrayDirectory.length > 1){
+            arrayDirectory.pop();
+        }
         pwd = arrayDirectory.join('/')
         this.workingDirectory = pwd;
     } else {
 	    var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
-	    try{
-	        this.data.dir(pwd, true);
-	        this.workingDirectory = pwd; 
-	    }catch(e){
-	    	return e.message;
-	    }
+        //check if the pwd is a directory 
+        this.data.dir(pwd, true);
+
+        this.workingDirectory = pwd; 
     }
 
     this.setPwd(this.workingDirectory);
 
-    return this.workingDirectory;
+    return '';
 }
 
-
-// CLI - End Prototype 
-
 module.exports = CLI; 
-var com = new CLI();
-
-// try {
-//     // var workingDirectory = '';
-//     console.log(com.option('ls'))
-//     console.log(com.option('cd Experience'));
-//     console.log(com.option('ls'))
-//     // console.log(com.option('cat Experience/TFA'));
-//     // console.log(com.option('cd TFA'));
-
-// } catch (e) {
-//     console.log(e)
-// }

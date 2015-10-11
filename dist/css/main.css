@@ -1,18 +1,11 @@
-*{
-	/*background: black; */
-	color: white; 
-	font-size: 16px;
-	padding: 1px;
-	font-family: monospace; 
-}
-body{
-	margin: 0; 
-	border-top: 20px black; 
-}
+
 
 
 .terminal{
-	background: black;
+	font-family: monospace; 
+	font-size: 16px;
+	background: #000;
+	color: #f2f2f2; 
 	width: auto; 
 	height: 500px;  
 	margin: 0 auto; 
@@ -22,6 +15,10 @@ body{
 	border-left: 2px solid #dfdfdf;
 	padding-bottom:5px; 
 	overflow: scroll; 
+	padding: 1px;
+}
+.terminal:focus{
+	outline:none; 
 }
 .terminal input{
 	color: #f36; 
@@ -30,6 +27,9 @@ body{
 	cursor: default; 
 	background: black; 
 	padding-left: 10px; 
+	width: 75%; 
+	font-size: 16px; 
+	
 }
 
 .terminal em, .terminal p{
@@ -39,24 +39,80 @@ body{
 /* Experiment*/
 .terminal::before{
 	position: absolute;  
-	top: 12px;
+	top: 15px;
 	background-color: #FC625C;  
-	width: 10px; 
-	height: 10px; 
+	width: 12px; 
+	height: 12px; 
 	border-radius: 5px; 
 	display: block; 
 	content: "";
 	box-shadow: 0 0 0 0 #FC625C,15px 0 0 0 #FDBC40,30px 0 0 0 #33C748;
 }
-
-.terminal .experience{
-	position: relative; 
-	padding: 5px; 
-}
-.terminal .experience .period{
+.terminal::after{
+	position: absolute; 
+	top: 10px; 
+	left: 45%;
+	content: "♡Aden";
+	/*font-size: 30px;*/
+	color: #000; 
+	width: 400px; 
 	float: right; 
-	font-size: 12px; 
+	
 }
-.terminal .experience em{
-	font-size: 12px; 
+
+.terminal .section{
+	position: relative; 
+	border: 1px dotted black; 
+	border-left: 2px solid #33C748; 
+	padding : 5px; 
+}
+.terminal .section em{
+	color: #A3A5A4;
+}
+
+.terminal .section .period{
+	float: right; 
+	font-size: 14px; 
+	color: #FDBC40;
+}
+.terminal .section .header{
+	/*float: left; */
+	position: relative; 
+}
+.terminal .section .title{
+	float: left; 
+}
+.terminal .section .details{
+	margin: 0; 
+}
+.terminal .section ul{
+	font-size: 13px; 
+}
+.terminal .list p{
+	color: #FDBC40; 
+}
+.terminal .section ul{
+	margin: 0; 
+	padding-left: 10px;
+	list-style-position: inside; 
+	list-style-type: none;  
+}
+.terminal hr{
+	background-color: #fff; 
+	margin: 2px; 
+	margin-bottom: 5px; 
+	padding: 0; 
+}
+.terminal pre{
+	white-space: pre-wrap;
+	margin: 0; 
+}
+.terminal .clearfix{
+	clear: both; 
+	margin: 0; 
+	padding: 0; 
+}
+
+.terminal *{
+	margin: 0; 
 }
