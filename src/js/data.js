@@ -12,10 +12,10 @@ var TFA = {
 var ABC = {
     "header": "ABC Global System",
     "subHeader": "Software Developer",
-    "detail": [ "📉 Create software to manipulate and extract data using Regex Expression with Java on UNIX system ",
-                "💻 Developed web applications using HTML/XHTML, CSS and JavaScript with PHP &amp; MySQL ",
-                "📰 Create and manage CMS using WordPress to ensure security and efficiency for the End-Users"
-               ],
+    "detail": ["📉 Create software to manipulate and extract data using Regex Expression with Java on UNIX system ",
+        "💻 Developed web applications using HTML/XHTML, CSS and JavaScript with PHP &amp; MySQL ",
+        "📰 Create and manage CMS using WordPress to ensure security and efficiency for the End-Users"
+    ],
     "period": "January-August '14",
     "location": "NYC, New York",
     "url": "www.abcglobalsystems.com/",
@@ -49,39 +49,51 @@ var skills = {
     "subHeader": "🔧 Tools I've used",
     "period": "2006-" + new Date().getFullYear().toString(),
     "detail": [
-        "🙈 JavaScript",
-        "🔥 C++",
-        "🔨 Java",
-        "✅ Others"
+        "✓ Languages: JavaScript,  C++, Java , & Others",
+        "✓ JS Framework: JQuery, AngularJS, Backbone.js, & D3JS",
+        "✓ Open-Source: WordPress, vBulltin, & XenForo "
     ],
     "url": "https://github.com/KhaledMohamedP",
     "directory": false
 };
 
-
-//education 
-var education = {
-    "header": "Brooklyn College",
-    "subHeader": "🎓 Computer Science",
-    "period": "2010-2014",
+var certification = {
+    "header": "Certification",
+    "subHeader": "List of certification (IT)",
     "detail": [
-        "Dean list '13 '14",
-        "CS Mentor with the Department of Computer Science",
+        "✓ CompTIA A+ , CompTIA License MHGCHPBRLF1QQPF",
+        "✓ Microsoft Certified Professional, Microsoft License E785­5479",
+        "✓ Server Virtualization with Windows Server Hyper­V and System Center, Microsoft"
     ],
     "directory": false
 }
-//File structure
+
+//education 
+var education = {
+        "header": "Brooklyn College",
+        "subHeader": "🎓 Computer Science",
+        "period": "2010-2014",
+        "detail": [
+            "Dean list '13 '14",
+            "CS Mentor with the Department of Computer Science",
+        ],
+        "directory": false
+    }
+    //File structure
 var directory = {
     "experience": {
         "TFA": TFA,
         "ABC": ABC,
     },
-    "project": {
+    "projects": {
         "BinaryHeap": BinaryHeap,
         "HuffmandCoding": HuffmandCoding,
     },
-    "education": education,
-    "skills": skills
+    "others": {
+        "education": education,
+        "skills": skills,
+        "certification": certification
+    }
 
 }
 module.exports = directory;

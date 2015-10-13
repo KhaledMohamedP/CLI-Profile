@@ -8,24 +8,36 @@ var mu = require("mustache");
 // mu.root = "../template"
 
 var cli = new CLI(data, "root", "khaled");
-var  input, UP_KEY = 38,
-    DOWN_KEY = 40,
-    ENTER_KEY = 13,
-    K_KEY = 75,
-    where = cli.lastCommand.length;
+
 
 function Display(screen) {
+    var input, UP_KEY = 38,
+        DOWN_KEY = 40,
+        ENTER_KEY = 13,
+        K_KEY = 75;
+
+    //to track location in lastCommand [] by up/down arrow 
+    this.where = cli.lastCommand.length;
+
     //Main Element  
     this.terminal = document.createElement("div");
+    this.result = document.createElement("div");
     this.inputDiv = document.createElement("div");
     this.inputEm = document.createElement("em");
     this.input = document.createElement("input");
     //When user enter something 
-    this.inputEm.innerHTML = cli.workingDirectory + " >$";
-    this.inputDiv.style.color = "red"
-    
-    //listen to key strokes 
-    var self = this; 
+    this.inputEm.innerHTML = cli.workingDirectory + " $";
+    this.inputDiv.className = "inputDiv";
+    this.terminal.className = "terminal";
+    this.terminal.setAttribute("tabindex", 1)
+
+    var self = this;
+    //listen to keystrokes inside terminal 
+    this.terminal.onkeypress = function(e) {
+        self.input.focus();
+    }
+
+    //capture key strokes inside input
     this.input.onkeyup = function(e) {
         switch (e.which) {
             case ENTER_KEY:
@@ -44,19 +56,21 @@ function Display(screen) {
                 break;
         }
         // Automatically scroll to the bottom 
-        screen.scrollTop = screen.scrollHeight;
+        // window.scrollTo(0, document.body.offsetHeight);
+        self.terminal.scrollTop = self.terminal.scrollHeight;
     }
 
     //Append to the give div
-    screen.appendChild(this.terminal);
+    this.terminal.appendChild(this.result);
     this.inputDiv.appendChild(this.inputEm);
     this.inputDiv.appendChild(this.input);
-    screen.appendChild(this.inputDiv)
+    this.terminal.appendChild(this.inputDiv)
+    screen.appendChild(this.terminal)
 
 }
 
 Display.prototype.clear = function() {
-    this.terminal.innerHTML = "";
+    this.result.innerHTML = "";
     this.input.value = "";
     return;
 }
@@ -69,31 +83,34 @@ Display.prototype.enter = function(e) {
 
     var view = this.getView(this.input.value);
 
-    this.terminal.insertAdjacentHTML("beforeend", view)
+    this.result.insertAdjacentHTML("beforeend", view)
 
     //reset
-    this.inputEm.innerHTML = cli.workingDirectory + " >$";
+    this.inputEm.innerHTML = cli.workingDirectory + " $";
     this.input.value = '';
-    where = cli.lastCommand.length;
+    this.where = cli.lastCommand.length;
 }
 
 Display.prototype.upkey = function() {
-    var letWhere = where - 1;
+    var letWhere = this.where - 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        this.input.value = cli.lastCommand[--where];
+        this.input.value = cli.lastCommand[--this.where];
+        //start from the end 
+        var len = this.input.value.length; 
+        this.input.setSelectionRange(len,len);
         return;
     }
 }
 
 Display.prototype.downkey = function() {
-    var letWhere = where + 1;
+    var letWhere = this.where + 1;
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        this.input.value = cli.lastCommand[++where];
+        this.input.value = cli.lastCommand[++this.where];
         return;
     }
 
     // reached the limit reset 
-    where = cli.lastCommand.length;
+    this.where = cli.lastCommand.length;
     this.input.value = '';
 }
 
@@ -112,12 +129,12 @@ Display.prototype.getViewHelper = function(result) {
         result: result
     }
 
-    if(this.isObject(result)){
-        obj.isCompany = obj.result.company? true:false; 
+    if (this.isObject(result)) {
+        obj.isCompany = obj.result.company ? true : false;
         return mu.to_html(template.section, obj);
     }
 
-    if(Array.isArray(result)){
+    if (Array.isArray(result)) {
         obj.result = obj.result.join("&nbsp;&nbsp;");
         return mu.to_html(template.list, obj);
     }
@@ -133,14 +150,11 @@ Display.prototype.isObject = function(obj) {
 
 
 window.onload = function() {
-    var elm = document.querySelector(".terminal");
-    elm.setAttribute("tabindex", 1)
-    
+    var elm = document.querySelector(".screen");
+
     var some = new Display(elm);
 
-    elm.onkeypress = function(e){
-        some.input.focus();
-    }
+    
 
     //when first loaded 
     some.input.focus();

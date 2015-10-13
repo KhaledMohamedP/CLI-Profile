@@ -1,5 +1,5 @@
 var section = ["<div>",
-					"<em>{{workingDirectory}} >$ {{command}}</em>",
+					"<em>{{workingDirectory}} $ {{command}}</em>",
 				"</div>",
 				"<div class=\"section\">",
 					"<div class=\"header\">",
@@ -18,7 +18,7 @@ var section = ["<div>",
 				"</div>"].join("\n");
 
 var list = ["<div class=\"list\"> ",
-	    		"<em>{{workingDirectory}} >$ {{command}}</em>", 
+	    		"<em>{{workingDirectory}} $ {{command}}</em>", 
 	    		"<p>{{&result}}</p>",
     		"</div>"].join("\n");
 

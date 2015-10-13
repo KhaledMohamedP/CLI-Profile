@@ -3,12 +3,16 @@ var Storage = require("./Storage.js");
 
 // CLI - Simple the runner Controller 
 function CLI(data, root, owner) {
-    this.owner = owner || "Obama";
-    this.root = root || "root";
-    this.workingDirectory = this.root;
+    //user info 
+    this.owner = owner;
+    this.root  = root || "root";
+    //pwd 
+    this.workingDirectory = owner || this.root ;
+    //commands storage
     this.lastCommand = [];
+    this.commands = ["ls", "help", "?", "cd", "cat", "pwd", "open"];
+    //the data object 
     this.data = new Storage(data);
-    this.commands = ["ls", "help", "?", "cd", "cat", "pwd", "open"]
 }
 
 //CLI - Begin Prototype 
@@ -94,9 +98,9 @@ CLI.prototype.open = function(pwd) {
 }
 
 CLI.prototype.cat = function(pwd) {
-	var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
+	var fullPwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
 
-    var file = this.data.dir(pwd); 
+    var file = this.data.dir(fullPwd); 
     if (this.data.isDirectory(file)) {
         throw new Error("cat: '" + pwd  +"' is a directory")
     }
