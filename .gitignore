@@ -28,6 +28,3 @@ node_modules
 
 coverage
 npm-debug.log
-
-# ignore dist
-/dist
