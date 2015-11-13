@@ -161,8 +161,6 @@ window.onload = function() {
 
     var some = new Display(elm);
 
-    
-
     //when first loaded 
     some.input.focus();
 }
