@@ -13,7 +13,6 @@ describe("testing", function() {
         cli.run("cd experience");
         result = cli.run("ls");
         expect(result[0]).toEqual("TFA");
-
     });
 
     it("should not change working directory if given wrong pwd", function() {
@@ -22,7 +21,7 @@ describe("testing", function() {
         } catch (e) {} 
 
         pwd = cli.run("pwd");
-        expect(pwd).toEqual("root/experience");
+        expect(pwd).toEqual("/root/experience");
     });
 
     it("should throw an error", function  () {
@@ -31,7 +30,7 @@ describe("testing", function() {
     it("should be able to go back .. and carries the correct pwd", function() {
         cli.run("cd ..")
         pwd = cli.run("pwd");
-        expect(pwd).toEqual("root");
+        expect(pwd).toEqual("/root");
     });
 
     it("should return an object", function() {

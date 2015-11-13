@@ -14,7 +14,8 @@ function Display(screen) {
     var input, UP_KEY = 38,
         DOWN_KEY = 40,
         ENTER_KEY = 13,
-        K_KEY = 75;
+        K_KEY = 75,
+        back_key = 10;
 
     //to track location in lastCommand [] by up/down arrow 
     this.where = cli.lastCommand.length;
@@ -33,7 +34,13 @@ function Display(screen) {
 
     var self = this;
     //listen to keystrokes inside terminal 
-    this.terminal.onkeypress = function(e) {
+    this.terminal.onkeydown = function(e) {
+        switch(e.which){
+            case ENTER_KEY:
+                e.preventDefault(); 
+                break; 
+        }
+        
         self.input.focus();
     }
 

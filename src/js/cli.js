@@ -108,7 +108,7 @@ CLI.prototype.cat = function(pwd) {
 }
 
 CLI.prototype.pwd = function() {
-    return this.workingDirectory;
+    return "/"+this.workingDirectory;
 }
 CLI.prototype.cd = function(pwd) {
     if (pwd == "..") {
