@@ -11,36 +11,39 @@ var cli = new CLI(data, "root", "khaled");
 
 
 function Display(screen) {
-    var input, UP_KEY = 38,
+    var UP_KEY = 38,
         DOWN_KEY = 40,
         ENTER_KEY = 13,
-        K_KEY = 75,
-        back_key = 10;
+        META_KEY = 91,
+        //letter k in the keyboard
+        K_KEY = 75;
 
-    //to track location in lastCommand [] by up/down arrow 
+    // To track location in lastCommand [] by up/down arrow 
     this.where = cli.lastCommand.length;
 
-    //Main Element  
+    // Main Element  
     this.terminal = document.createElement("div");
     this.result = document.createElement("div");
     this.inputDiv = document.createElement("div");
     this.inputEm = document.createElement("em");
     this.input = document.createElement("input");
-    //When user enter something 
+    
+    // When user enter something 
     this.inputEm.innerHTML = cli.workingDirectory + " $";
     this.inputDiv.className = "inputDiv";
     this.terminal.className = "terminal";
     this.terminal.setAttribute("tabindex", 1)
 
     var self = this;
-    //listen to keystrokes inside terminal 
+   
+    // Listen to keystrokes inside terminal screen + (Help focus to the input)
     this.terminal.onkeydown = function(e) {
-        switch(e.which){
+        switch (e.which) {
             case ENTER_KEY:
-                e.preventDefault(); 
-                break; 
+                e.preventDefault();
+                break;
         }
-        
+
         self.input.focus();
     }
 
@@ -48,7 +51,7 @@ function Display(screen) {
     this.input.onkeyup = function(e) {
         switch (e.which) {
             case ENTER_KEY:
-                self.enter(e)
+                self.enter(e);
                 break;
             case UP_KEY:
                 self.upkey(e);
@@ -56,18 +59,24 @@ function Display(screen) {
             case DOWN_KEY:
                 self.downkey(e);
                 break;
-            case e.ctrlKey && K_KEY:
+            case (e.ctrlKey && K_KEY):
+                console.log("presses")
                 self.clear();
+                break;
+            case e.metaKey:
+                console.log("METAKEY");
                 break;
             default:
                 break;
         }
+        // console.log("e", e.metaKey, e.ctrlKey , e.which);
+        console.log("e", e);
         // Automatically scroll to the bottom 
         // window.scrollTo(0, document.body.offsetHeight);
         self.terminal.scrollTop = self.terminal.scrollHeight;
     }
 
-    //Append to the give div
+    //Append to the terminal 
     this.terminal.appendChild(this.result);
     this.inputDiv.appendChild(this.inputEm);
     this.inputDiv.appendChild(this.input);
@@ -76,6 +85,9 @@ function Display(screen) {
 
 }
 
+
+
+// Prototype Chain
 Display.prototype.clear = function() {
     this.result.innerHTML = "";
     this.input.value = "";
@@ -103,8 +115,8 @@ Display.prototype.upkey = function() {
     if (letWhere > -1 && letWhere < cli.lastCommand.length) {
         this.input.value = cli.lastCommand[--this.where];
         //start from the end 
-        var len = this.input.value.length; 
-        this.input.setSelectionRange(len,len);
+        var len = this.input.value.length;
+        this.input.setSelectionRange(len, len);
         return;
     }
 }
@@ -147,20 +159,8 @@ Display.prototype.getViewHelper = function(result) {
     }
 
     return mu.to_html(template.list, obj);
-}
+};
 
 Display.prototype.isObject = function(obj) {
     return typeof obj === "object" && !Array.isArray(obj) && obj !== null;
-}
-
-
-
-
-window.onload = function() {
-    var elm = document.querySelector(".screen");
-
-    var some = new Display(elm);
-
-    //when first loaded 
-    some.input.focus();
-}
+};

@@ -29,7 +29,7 @@ Storage.prototype.dir = function(pwd, directory) {
         currDir = currDir[subDir[i]]
     }
     return currDir;
-}
+};
 
 
 Storage.prototype.list = function(pwd) {
@@ -43,7 +43,8 @@ Storage.prototype.list = function(pwd) {
         }
     }
     return list;
-}
+};
+
 Storage.prototype.isDirectory = function(obj) {
     if (obj.hasOwnProperty("directory")) {
         if (obj["directory"] == false)
@@ -51,13 +52,14 @@ Storage.prototype.isDirectory = function(obj) {
     }
 
     return true;
-}
+};
+
 Storage.prototype.has = function(dir, subDir) {
     if (dir.hasOwnProperty(subDir)) {
         return true
     }
 
     return false;
-}
+};
 
 module.exports = Storage;
