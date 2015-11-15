@@ -14,7 +14,6 @@ function Display(screen) {
     var UP_KEY = 38,
         DOWN_KEY = 40,
         ENTER_KEY = 13,
-        META_KEY = 91,
         //letter k in the keyboard
         K_KEY = 75;
 
@@ -63,14 +62,9 @@ function Display(screen) {
                 console.log("presses")
                 self.clear();
                 break;
-            case e.metaKey:
-                console.log("METAKEY");
-                break;
             default:
                 break;
         }
-        // console.log("e", e.metaKey, e.ctrlKey , e.which);
-        console.log("e", e);
         // Automatically scroll to the bottom 
         // window.scrollTo(0, document.body.offsetHeight);
         self.terminal.scrollTop = self.terminal.scrollHeight;
