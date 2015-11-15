@@ -7,7 +7,7 @@ var TFA = {
     "period": "August-December `14",
     "url": "https://www.teachforamerica.org/",
     "directory": false
-}
+};
 
 var ABC = {
     "header": "ABC Global System",
@@ -20,7 +20,7 @@ var ABC = {
     "location": "NYC, New York",
     "url": "www.abcglobalsystems.com/",
     "directory": false
-}
+};
 
 //BinaryHeap
 var BinaryHeap = {
@@ -31,7 +31,7 @@ var BinaryHeap = {
     "period": "September",
     "url": "https://github.com/KhaledMohamedP/BinaryHeap",
     "directory": false,
-}
+};
 
 var HuffmandCoding = {
     "header": "HuffmanCoding",
@@ -41,7 +41,7 @@ var HuffmandCoding = {
     "period": "June",
     "url": "https://khaledm.com/huffman",
     "directory": false
-}
+};
 
 //skills
 var skills = {
@@ -66,7 +66,7 @@ var certification = {
         "✓ Server Virtualization with Windows Server Hyper­V and System Center, Microsoft"
     ],
     "directory": false
-}
+};
 
 //education 
 var education = {
@@ -78,9 +78,10 @@ var education = {
             "CS Mentor with the Department of Computer Science",
         ],
         "directory": false
-    }
-    //File structure
-var directory = {
+    };
+
+//File structure
+var directoryTree = {
     "experience": {
         "TFA": TFA,
         "ABC": ABC,
@@ -95,5 +96,6 @@ var directory = {
         "certification": certification
     }
 
-}
-module.exports = directory;
+};
+
+module.exports = directoryTree;
