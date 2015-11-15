@@ -5,8 +5,6 @@ var template = require("../template/ls.js");
 
 var mu = require("mustache");
 
-// mu.root = "../template"
-
 var cli = new CLI(data, "root", "khaled");
 
 
@@ -86,7 +84,7 @@ Display.prototype.clear = function() {
     this.result.innerHTML = "";
     this.input.value = "";
     return;
-}
+};
 
 Display.prototype.enter = function(e) {
     //GUI Affect Commands 
@@ -102,7 +100,7 @@ Display.prototype.enter = function(e) {
     this.inputEm.innerHTML = cli.workingDirectory + " $";
     this.input.value = '';
     this.where = cli.lastCommand.length;
-}
+};
 
 Display.prototype.upkey = function() {
     var letWhere = this.where - 1;
@@ -113,7 +111,7 @@ Display.prototype.upkey = function() {
         this.input.setSelectionRange(len, len);
         return;
     }
-}
+};
 
 Display.prototype.downkey = function() {
     var letWhere = this.where + 1;
@@ -125,7 +123,7 @@ Display.prototype.downkey = function() {
     // reached the limit reset 
     this.where = cli.lastCommand.length;
     this.input.value = '';
-}
+};
 
 Display.prototype.getView = function(command) {
     try {
@@ -133,7 +131,7 @@ Display.prototype.getView = function(command) {
     } catch (e) {
         return this.getViewHelper(e.message);
     }
-}
+};
 
 Display.prototype.getViewHelper = function(result) {
     var obj = {

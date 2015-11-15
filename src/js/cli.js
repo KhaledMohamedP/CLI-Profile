@@ -18,7 +18,7 @@ function CLI(data, root, owner) {
 //CLI - Begin Prototype 
 CLI.prototype.setPwd = function(pwd) {
     this.workingDirectory = this.cleanPwd(pwd);
-}
+};
 
 CLI.prototype.cleanPwd = function(pwd) {
     var listDirectory = pwd.split(/[\s|\/]/); // . | space | slash  
@@ -29,7 +29,8 @@ CLI.prototype.cleanPwd = function(pwd) {
     };
     //clean pwd from spaces/slashes at the end of the link(pwd)
     return listDirectory.join('/');
-},
+};
+
 CLI.prototype.run = function (input) {
     var arg = input.split(/\s+/); //removing unnecessary spaces 
     var command = arg[0].toLowerCase(); //
@@ -41,7 +42,8 @@ CLI.prototype.run = function (input) {
         throw Error("Unknown command '" + command + "'");
     }
     return this.option(command, pwd)
-},
+};
+
 CLI.prototype.option = function(command, pwd) {
     switch (command) {
         case 'ls':
@@ -59,7 +61,8 @@ CLI.prototype.option = function(command, pwd) {
             return this.pwd(pwd)
     }
 
-}
+};
+
 CLI.prototype.ls = function(pwd) {
     if(pwd !== this.workingDirectory)
         pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
@@ -71,7 +74,8 @@ CLI.prototype.ls = function(pwd) {
     }
 
     return this.data.list(pwd);
-}
+};
+
 CLI.prototype.help = function(pwd) {
     return ("   <pre> Welcome to "+this.owner+"'s server via the terminal\n"+
             "   ?, help : shows some helpful commands.\n" +
@@ -81,9 +85,9 @@ CLI.prototype.help = function(pwd) {
             "       cat : print the file 😉.\n" +
             "        vi : coming out soon\n" +
             "     clear : clears the console. try \'ctrl+k\'"+
-            "   </pre>")
-    // return "&nbsp;&nbsp;cd:  </br> &nbsp;&nbsp;ls:  <br> &nbsp;&nbsp; </br> &nbsp;&nbsp;cat: read a file </br> &nbsp;&nbsp;";
-}
+            "   </pre>");
+};
+
 CLI.prototype.open = function(pwd) {
     var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
     var dir = this.data.dir(pwd);
@@ -95,7 +99,7 @@ CLI.prototype.open = function(pwd) {
     }
     window.open(dir.url)
     return dir.url;
-}
+};
 
 CLI.prototype.cat = function(pwd) {
 	var fullPwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
@@ -105,11 +109,12 @@ CLI.prototype.cat = function(pwd) {
         throw new Error("cat: '" + pwd  +"' is a directory")
     }
     return file;
-}
+};
 
 CLI.prototype.pwd = function() {
     return "/"+this.workingDirectory;
-}
+};
+
 CLI.prototype.cd = function(pwd) {
     if (pwd == "..") {
         var arrayDirectory = this.workingDirectory.split('/');
@@ -129,6 +134,6 @@ CLI.prototype.cd = function(pwd) {
     this.setPwd(this.workingDirectory);
 
     return '';
-}
+};
 
 module.exports = CLI; 
