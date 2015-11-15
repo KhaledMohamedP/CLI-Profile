@@ -7,7 +7,7 @@
     "build": "jasmine && npm run cover && npm run browserify && npm run transferCss ",
     "cover": "istanbul cover jasmine",
     "watchify": "watchify ./src/js/Display.js  -o ./dist/js/main.js -d",
-    "browserify": "browserify ./src/js/Display.js  -o ./dist/js/main.js -d",
+    "browserify": "browserify ./src/js/init.js  -o ./dist/js/main.js -d",
     "transferCss": "cp -r ./src/css  ./dist/"
   },
   "repository": {

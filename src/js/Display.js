@@ -156,3 +156,5 @@ Display.prototype.getViewHelper = function(result) {
 Display.prototype.isObject = function(obj) {
     return typeof obj === "object" && !Array.isArray(obj) && obj !== null;
 };
+
+module.exports = Display; 
