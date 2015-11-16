@@ -1,7 +1,7 @@
 {
   "name": "cli-profile",
   "version": "1.0.0",
-  "description": "Introducing oneself the old fasion way",
+  "description": "Introducing oneself the old fashion way",
   "main": "index.js",
   "scripts": {
     "build": "jasmine && npm run cover && npm run browserify && npm run transferCss ",

@@ -33,10 +33,10 @@ var BinaryHeap = {
     "directory": false,
 };
 
-var HuffmandCoding = {
+var HuffmanCoding = {
     "header": "HuffmanCoding",
     "subHeader": "Open-Source",
-    "detail": "HuffmandCoding using JS, HTML, CSS COOL huh",
+    "detail": "HuffmanCoding using JS, HTML, CSS COOL huh",
     "location": "Aden, Yemen",
     "period": "June",
     "url": "https://khaledm.com/huffman",
@@ -88,7 +88,7 @@ var directoryTree = {
     },
     "projects": {
         "BinaryHeap": BinaryHeap,
-        "HuffmandCoding": HuffmandCoding,
+        "HuffmanCoding": HuffmanCoding,
     },
     "others": {
         "education": education,

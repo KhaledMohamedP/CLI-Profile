@@ -9,7 +9,7 @@ function CLI(data, root, owner) {
     //pwd 
     this.workingDirectory = owner || this.root;
     //commands storage
-    this.lastCommand = [];
+    this.history = [];
     this.commands = ["ls", "help", "?", "cd", "cat", "pwd", "open"];
     //the data object 
     this.data = new Storage(data);
@@ -21,27 +21,39 @@ CLI.prototype.setPwd = function(pwd) {
 };
 
 CLI.prototype.cleanPwd = function(pwd) {
-    var listDirectory = pwd.split(/[\s|\/]/); // . | space | slash  
+
+     // split if any of (. | space | slash) found in the string->pwd
+    var listDirectory = pwd.split(/[\s|\/]/); 
+    
     for (var i = listDirectory.length - 1; i >= 0; i--) {
+
+        // Get rid off anything with zero length 
         if (listDirectory[i].length === 0) {
             listDirectory.splice(i, 1)
         }
     };
-    //clean pwd from spaces/slashes at the end of the link(pwd)
+
+    //clean pwd from spaces/slashes
     return listDirectory.join('/');
 };
 
 CLI.prototype.run = function(input) {
-    var arg = input.split(/\s+/); //removing unnecessary spaces 
-    var command = arg[0].toLowerCase(); //
+    //removing unnecessary spaces
+    var arg = input.split(/\s+/); 
+
+    // The first argument should be CLI(e.g ls, cd, pwd ...)
+    var command = arg[0].toLowerCase();
+
+    //
     var pwd = arg[1] ? this.cleanPwd(arg[1]) : this.workingDirectory;
 
-    this.lastCommand.push(input);
+    // History: Store the command into the list of previous commands 
+    this.history.push(input);
 
     if (this.commands.indexOf(command) == -1) {
         throw Error("Unknown command '" + command + "'");
     }
-    return this.option(command, pwd)
+    return this.option(command, pwd);
 };
 
 CLI.prototype.option = function(command, pwd) {
@@ -92,12 +104,12 @@ CLI.prototype.open = function(pwd) {
     var pwd = this.cleanPwd(this.workingDirectory + '/' + pwd);
     var dir = this.data.dir(pwd);
     if (this.data.isDirectory(dir)) {
-        throw Error("sorry there is no support to 'open' directories yet :(")
+        throw Error("No support to 'open' directories :(")
     }
-    if (dir.url == undefined || dir.url == null) {
-        throw Error("no URL is specify to be open!")
-    }
-    window.open(dir.url)
+    var url = dir.url || dir; 
+
+    window.open(url);
+    
     return dir.url;
 };
 

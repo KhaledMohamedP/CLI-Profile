@@ -15,8 +15,8 @@ function Display(screen) {
         //letter k in the keyboard
         K_KEY = 75;
 
-    // To track location in lastCommand [] by up/down arrow 
-    this.where = cli.lastCommand.length;
+    // To track location in history [] by up/down arrow 
+    this.where = cli.history.length;
 
     // Main Element  
     this.terminal = document.createElement("div");
@@ -99,13 +99,13 @@ Display.prototype.enter = function(e) {
     //reset
     this.inputEm.innerHTML = cli.workingDirectory + " $";
     this.input.value = '';
-    this.where = cli.lastCommand.length;
+    this.where = cli.history.length;
 };
 
 Display.prototype.upkey = function() {
     var letWhere = this.where - 1;
-    if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        this.input.value = cli.lastCommand[--this.where];
+    if (letWhere > -1 && letWhere < cli.history.length) {
+        this.input.value = cli.history[--this.where];
         //start from the end 
         var len = this.input.value.length;
         this.input.setSelectionRange(len, len);
@@ -115,13 +115,13 @@ Display.prototype.upkey = function() {
 
 Display.prototype.downkey = function() {
     var letWhere = this.where + 1;
-    if (letWhere > -1 && letWhere < cli.lastCommand.length) {
-        this.input.value = cli.lastCommand[++this.where];
+    if (letWhere > -1 && letWhere < cli.history.length) {
+        this.input.value = cli.history[++this.where];
         return;
     }
 
     // reached the limit reset 
-    this.where = cli.lastCommand.length;
+    this.where = cli.history.length;
     this.input.value = '';
 };
 
@@ -136,7 +136,7 @@ Display.prototype.getView = function(command) {
 Display.prototype.getViewHelper = function(result) {
     var obj = {
         workingDirectory: cli.workingDirectory,
-        command: cli.lastCommand[cli.lastCommand.length - 1],
+        command: cli.history[cli.history.length - 1],
         result: result
     }
 
